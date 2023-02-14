@@ -1,18 +1,21 @@
-project(WhistleDetection)
+project(WhistleDetectionRelease)
 
-add_library(${PROJECT_NAME}
-    soundcapturing.cpp
-    soundcapturing.h
+cmake_minimum_required(VERSION 3.16)
+
+if(COMMAND cmake_policy)
+  cmake_policy(SET CMP0003 NEW)
+endif(COMMAND cmake_policy)
+
+add_subdirectory(whistledetection)
+add_subdirectory(soundcapturing)
+add_subdirectory(tfliteexecuter)
+
+add_executable(${PROJECT_NAME}
+    example.cpp
 )
-
-add_subdirectory(whistle)
 
 target_link_libraries(${PROJECT_NAME}
-    Whistle
-    asound
+    SoundCapturing
 )
-target_include_directories(${PROJECT_NAME}
-    PUBLIC
-        .
-)
-set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 14)
+
+set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 17)
